@@ -15,6 +15,7 @@
  * @returns {JSX.Element}
  * @constructor
  */
+
 export const Accordion = ({
   title,
   icon,
@@ -22,7 +23,7 @@ export const Accordion = ({
   subtitle,
   children,
   className,
-  onChange
+  onChange,
 }) => {
   return (
     <>
