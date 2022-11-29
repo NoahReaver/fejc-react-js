@@ -20,13 +20,13 @@ const getArtistById = (id, size) => {
         id: item.id,
         title: item.title,
         categoryIds: item.category_ids,
-        imageUrl: `${config.iiif_url}/${item.image_id}/full/${size},/0/default.png`,
+        imageUrl: `${config.iiif_url}/${item.image_id}/full/${size},/0/default.jpg`,
         imageAltText: item.thumbnail.alt_text,
       }))
     );
 };
 
-export const useArtistById = (artistId = "40610", size = 20) => {
+export const useArtistById = (artistId = "40610", size = 100) => {
   return useQuery(
     ["artist", artistId, size],
     () => getArtistById(artistId, size),
