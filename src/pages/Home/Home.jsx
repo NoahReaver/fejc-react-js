@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useArtistById } from "../../api/useArtistById";
 import { useCategoriesById } from "../../api/useCategoriesById";
 import { Accordion } from "../../components/Accordion/Accordion";
@@ -31,6 +30,15 @@ export const Home = () => {
   ];
 
   const pageRef = useRef();
+  const accordionRef = useRef([]);
+
+  useEffect(() => {
+    if (categories.data)
+      accordionRef.current = accordionRef.current.slice(
+        0,
+        categories.data.length
+      );
+  }, [categories.data]);
 
   return (
     <div className="page" ref={pageRef}>
@@ -41,17 +49,31 @@ export const Home = () => {
           <Accordion
             key={i}
             title={ele.title}
-            icon={categoryIcons[i]}
+            innerRef={(e) => (accordionRef.current[i] = e)}
+            icon={
+              <div
+                style={{
+                  backgroundImage: `url(${categoryIcons[i]})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              />
+            }
             expanded={activeAccordion === i}
             onChange={() =>
               setActiveAccordion((prev) => {
                 const newState = prev === i ? null : i;
                 if (!newState)
-                  pageRef.current.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: "smooth",
-                  });
+                  setTimeout(
+                    () =>
+                      pageRef.current.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: "smooth",
+                      }),
+                    1
+                  );
+                else accordionRef.current[i].scrollIntoView();
 
                 return prev === i ? null : i;
               })
@@ -61,7 +83,16 @@ export const Home = () => {
               return (
                 <IconLink
                   key={ind}
-                  icon={img.imageUrl}
+                  icon={
+                    <div
+                      className="home__iconlink-image"
+                      style={{
+                        backgroundImage: `url(${img.imageUrl})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                      }}
+                    />
+                  }
                   label={img.title}
                   to={`paintings/${img.id}`}
                 />

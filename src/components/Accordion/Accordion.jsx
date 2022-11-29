@@ -3,6 +3,8 @@
  * @param {boolean} newExpandedState
  */
 
+import { useRef, useState } from "react";
+
 /**
  *
  * @param {string} title
@@ -24,13 +26,27 @@ export const Accordion = ({
   children,
   className,
   onChange,
+  innerRef,
 }) => {
+  const [firstLoad, setFirstLoad] = useState(true);
+  const contentRef = useRef();
   return (
     <div
+      ref={innerRef}
       className={
-        expanded ? "accordion__container--expanded" : "accordion__container"
+        expanded
+          ? `accordion__container--expanded ${className} ${
+              firstLoad ? "accordion__no-animation" : ""
+            }`
+          : `accordion__container ${className} ${
+              firstLoad ? "accordion__no-animation" : ""
+            }`
       }
-      onClick={onChange}
+      onClick={() => {
+        setTimeout(() => contentRef.current.scrollTo(0, 0), 1);
+        setFirstLoad(false);
+        onChange();
+      }}
     >
       <div
         className={
@@ -39,12 +55,7 @@ export const Accordion = ({
             : "accordion__header"
         }
       >
-        <div className="accordion__icon-placeholder">
-          <div
-            className="accordion__icon"
-            style={{ backgroundImage: `url(${icon})` }}
-          />
-        </div>
+        {icon && <div className="accordion__icon-placeholder">{icon}</div>}
         <div className="accordion__text">
           <div className="accordion__title">{title}</div>
           <div className={subtitle ? "accordion__subtitle" : ""}>
@@ -61,7 +72,10 @@ export const Accordion = ({
           />
         </div>
       </div>
-      <div className={expanded ? "accordion__content" : "accordion__hidden"}>
+      <div
+        ref={contentRef}
+        className={expanded ? "accordion__content" : "accordion__hidden"}
+      >
         {children}
       </div>
     </div>

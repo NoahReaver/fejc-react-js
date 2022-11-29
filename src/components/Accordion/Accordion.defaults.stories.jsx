@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { Accordion } from './Accordion';
+import { Accordion } from "./Accordion";
 
 const icon = (
   <img
@@ -10,90 +10,101 @@ const icon = (
 );
 
 export default {
-  title: 'Ch Components/Accordion/Details',
+  title: "Ch Components/Accordion/Details",
   component: Accordion,
   args: {
-    title: 'Simple Story',
-    children: <span>Content</span>
+    title: "Simple Story",
+    children: <span>Content</span>,
   },
   parameters: {
     controls: {
       disabled: false,
-      include: /^expanded$/
-    }
-  }
+      include: /^expanded$/,
+    },
+  },
 };
 
 const Template = (props) => {
   return (
     <div className="w-full max-w-[600px]">
-      <Accordion {...props}/>
+      <Accordion {...props} />
     </div>
   );
 };
 
 export const SimpleStory = Template.bind({});
-SimpleStory.storyName = 'Title and content';
-SimpleStory.args = {};
+SimpleStory.storyName = "Title and content";
+SimpleStory.args = { expanded: true };
 
 export const SimpleStoryWithSubtitle = Template.bind({});
-SimpleStoryWithSubtitle.storyName = 'Title, subtitle and content';
+SimpleStoryWithSubtitle.storyName = "Title, subtitle and content";
 SimpleStoryWithSubtitle.args = {
-  subtitle: 'Small description',
-  children: <span>Content</span>
+  subtitle: "Small description",
+  expanded: true,
+  children: <span>Content</span>,
 };
 
 export const SimpleStoryWithIcon = Template.bind({});
-SimpleStoryWithIcon.storyName = 'Title, icon and content';
+SimpleStoryWithIcon.storyName = "Title, icon and content";
 SimpleStoryWithIcon.args = {
+  expanded: true,
   icon,
-  children: <span>Content</span>
+  children: <span>Content</span>,
 };
 
 export const SimpleStoryWithFullHeader = Template.bind({});
-SimpleStoryWithFullHeader.storyName = 'Title, subtitle, icon and content';
+SimpleStoryWithFullHeader.storyName = "Title, subtitle, icon and content";
 SimpleStoryWithFullHeader.args = {
-  title: 'Simple Story',
-  subtitle: 'Small description',
+  title: "Simple Story",
+  expanded: true,
+  subtitle: "Small description",
   icon,
-  children: <span>Content</span>
+  children: <span>Content</span>,
 };
 
 export const SimpleStoryWithLongTitle = Template.bind({});
-SimpleStoryWithLongTitle.storyName = 'Long title';
+SimpleStoryWithLongTitle.storyName = "Long title";
 SimpleStoryWithLongTitle.args = {
-  title: 'This is an example of a long title to test whether the accordion is displayed appropriately',
-  subtitle: 'Small description',
+  title:
+    "This is an example of a long title to test whether the accordion is displayed appropriately",
+  subtitle: "Small description",
   icon,
-  children: <span>Content</span>
+  children: <span>Content</span>,
 };
 
 export const SimpleStoryWithLongSubTitle = Template.bind({});
-SimpleStoryWithLongSubTitle.storyName = 'Long subtitle';
+SimpleStoryWithLongSubTitle.storyName = "Long subtitle";
 SimpleStoryWithLongSubTitle.args = {
-  subtitle: 'This is an example of a long subtitle to test whether the accordion is displayed appropriately',
+  subtitle:
+    "This is an example of a long subtitle to test whether the accordion is displayed appropriately",
   icon,
-  children: <span>Content</span>
+  children: <span>Content</span>,
 };
 
 export const SimpleStoryWithLongContent = Template.bind({});
-SimpleStoryWithLongContent.storyName = 'Long content';
+SimpleStoryWithLongContent.storyName = "Long content";
 SimpleStoryWithLongContent.args = {
-  subtitle: 'Small description',
+  subtitle: "Small description",
   icon,
-  // expanded: true,
+  expanded: true,
   children: (
     <div>
       <p>The captain sails with fight, command the pacific ocean.</p>
       <p>Ferox, noster bursas cito examinare de bassus, barbatus adelphis.</p>
-      <p>Chickpeas can be varnished with sliced chicory, also try mash uping the porridge with vinegar.</p>
-      <p>Senior, vital cosmonauts surprisingly open a collective, extraterrestrial machine.</p>
+      <p>
+        Chickpeas can be varnished with sliced chicory, also try mash uping the
+        porridge with vinegar.
+      </p>
+      <p>
+        Senior, vital cosmonauts surprisingly open a collective,
+        extraterrestrial machine.
+      </p>
     </div>
-  )
+  ),
 };
 
 export const CollapsedAnimationStory = Template.bind({});
-CollapsedAnimationStory.storyName = 'Animation: Starting from collapsed';
+CollapsedAnimationStory.storyName = "Animation: Starting from collapsed";
 CollapsedAnimationStory.decorators = [
   (Story, context) => {
     const [expanded, setExpanded] = useState(false);
@@ -103,27 +114,33 @@ CollapsedAnimationStory.decorators = [
         args={{
           ...context.args,
           expanded,
-          onChange: setExpanded
+          onChange: setExpanded,
         }}
       />
     );
-  }
+  },
 ];
 CollapsedAnimationStory.args = {
-  subtitle: 'Small description',
+  subtitle: "Small description",
   icon,
   children: (
     <div>
       <p>The captain sails with fight, command the pacific ocean.</p>
       <p>Ferox, noster bursas cito examinare de bassus, barbatus adelphis.</p>
-      <p>Chickpeas can be varnished with sliced chicory, also try mash uping the porridge with vinegar.</p>
-      <p>Senior, vital cosmonauts surprisingly open a collective, extraterrestrial machine.</p>
+      <p>
+        Chickpeas can be varnished with sliced chicory, also try mash uping the
+        porridge with vinegar.
+      </p>
+      <p>
+        Senior, vital cosmonauts surprisingly open a collective,
+        extraterrestrial machine.
+      </p>
     </div>
-  )
+  ),
 };
 
 export const ExpandedAnimationStory = Template.bind({});
-ExpandedAnimationStory.storyName = 'Animation: Starting from expanded';
+ExpandedAnimationStory.storyName = "Animation: Starting from expanded";
 ExpandedAnimationStory.decorators = [
   (Story, context) => {
     const [expanded, setExpanded] = useState(true);
@@ -133,14 +150,14 @@ ExpandedAnimationStory.decorators = [
         args={{
           ...context.args,
           expanded,
-          onChange: setExpanded
+          onChange: setExpanded,
         }}
       />
     );
-  }
+  },
 ];
 ExpandedAnimationStory.args = {
   expanded: false,
-  subtitle: 'Small description',
-  icon
+  subtitle: "Small description",
+  icon,
 };
