@@ -26,9 +26,29 @@ export const Accordion = ({
   onChange,
 }) => {
   return (
-    <>
-      <span>Accordion!</span>
-      {children}
-    </>
+    <div
+      className={
+        expanded ? "accordion__container--expanded" : "accordion__container"
+      }
+    >
+      <div className="accordion__header">
+        <div className="accordion__icon-placeholder">
+          <div
+            className="accordion__icon"
+            style={{ backgroundImage: `url(${icon})` }}
+          />
+        </div>
+        <div className="accordion__text">
+          <div className="accordion__title">{title}</div>
+          <div className="accordion__subtitle">{subtitle}</div>
+        </div>
+        <div className="accordion__arrow-container">
+          <div className="accordion__arrow-down icon-arrow-down" />
+        </div>
+      </div>
+      <div className={expanded ? "accordion__content" : "accordion__hidden"}>
+        {children}
+      </div>
+    </div>
   );
 };

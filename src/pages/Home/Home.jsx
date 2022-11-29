@@ -1,5 +1,6 @@
 import { useArtistById } from "../../api/useArtistById";
 import { useCategoriesById } from "../../api/useCategoriesById";
+import { Accordion } from "../../components/Accordion/Accordion";
 
 export const Home = () => {
   const artist = useArtistById();
@@ -14,6 +15,7 @@ export const Home = () => {
   return (
     <div className="page">
       <h2 className="title-2">Mr. Van G</h2>
+      <Accordion />
     </div>
   );
 };
