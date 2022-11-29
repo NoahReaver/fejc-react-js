@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import { useArtistById } from "../../api/useArtistById";
 import { useCategoriesById } from "../../api/useCategoriesById";
@@ -30,8 +30,10 @@ export const Home = () => {
     categories.data?.at(2).images[2]?.imageUrl,
   ];
 
+  const pageRef = useRef();
+
   return (
-    <div className="page">
+    <div className="page" ref={pageRef}>
       <h2 className="title-2">Mr. Van G</h2>
 
       {categories.data?.map((ele, i) => {
@@ -42,7 +44,17 @@ export const Home = () => {
             icon={categoryIcons[i]}
             expanded={activeAccordion === i}
             onChange={() =>
-              setActiveAccordion((prev) => (prev === i ? null : i))
+              setActiveAccordion((prev) => {
+                const newState = prev === i ? null : i;
+                if (!newState)
+                  pageRef.current.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                  });
+
+                return prev === i ? null : i;
+              })
             }
           >
             {ele.images.map((img, ind) => {
