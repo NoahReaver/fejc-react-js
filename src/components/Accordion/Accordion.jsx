@@ -28,9 +28,11 @@ export const Accordion = ({
   onChange,
   innerRef,
 }) => {
-  const [firstLoad, setFirstLoad] = useState(true);
-  const contentRef = useRef();
+  const [firstLoad, setFirstLoad] = useState(true); // Allows to disable accordion animation on first load
 
+  const contentRef = useRef(); // Accordion content scroll control
+
+  // onClick: accordion collapse/expand
   function accordionOnClick() {
     setTimeout(() => contentRef.current.scrollTo(0, 0), 1);
     setFirstLoad(false);

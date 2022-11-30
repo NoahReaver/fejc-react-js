@@ -5,9 +5,12 @@ import { Accordion } from "../../components/Accordion/Accordion";
 import { IconLink } from "../../components/IconLink/IconLink";
 
 export const Home = () => {
+  // Get artist info
   const artist = useArtistById();
 
+  // Separate artworks by category
   const categoryIds = new Set();
+
   artist.data?.forEach((item) =>
     item.categoryIds.forEach((ele) => categoryIds.add(ele))
   );
@@ -20,10 +23,9 @@ export const Home = () => {
     );
   });
 
-  const [activeAccordion, setActiveAccordion] = useState();
-  const categoryIcons = categories.data?.map((e) => e.images?.at(0)?.imageUrl);
+  const categoryIcons = categories.data?.map((e) => e.images?.at(0)?.imageUrl); // Pick first image of each category as accordion icon
 
-  const pageRef = useRef();
+  // Accordion reference for auto-scroll on expansion
   const accordionRef = useRef([]);
 
   useEffect(() => {
@@ -34,6 +36,11 @@ export const Home = () => {
       );
   }, [categories.data]);
 
+  // Accordion onChange:
+  // -Active accordion state
+  // -Scroll to page top when an accordion collapses
+  const [activeAccordion, setActiveAccordion] = useState();
+  const pageRef = useRef();
   const accordionOnChange = (i) =>
     setActiveAccordion((prev) => {
       const newState = prev === i ? null : i;
@@ -52,6 +59,7 @@ export const Home = () => {
       return prev === i ? null : i;
     });
 
+  // RETURN JSX
   return (
     <div className="page" ref={pageRef}>
       <h2 className="title-2">Mr. Van G</h2>
