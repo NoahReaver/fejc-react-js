@@ -1,6 +1,3 @@
-import { ReactNode } from "react";
-import { Link } from "react-router-dom";
-
 /**
  *
  * @param {React.ReactNode} icon
@@ -9,6 +6,9 @@ import { Link } from "react-router-dom";
  * @returns {JSX.Element}
  * @constructor
  */
+
+import { Link } from "react-router-dom";
+
 export const IconLink = ({ icon, label, to }) => {
   return (
     <>

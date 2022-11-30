@@ -15,19 +15,13 @@ export const Home = () => {
   const categories = useCategoriesById(Array.from(categoryIds));
 
   categories.data?.forEach((ele, i) => {
-    const categoryImages = [];
-    artist.data?.forEach((item) => {
-      if (item.categoryIds.includes(ele.id)) categoryImages.push(item);
-    });
-    categories.data[i].images = categoryImages;
+    categories.data[i].images = artist.data?.filter((item) =>
+      item.categoryIds.includes(ele.id)
+    );
   });
 
   const [activeAccordion, setActiveAccordion] = useState();
-  const categoryIcons = [
-    categories.data?.at(0).images[1]?.imageUrl,
-    categories.data?.at(0).images[0]?.imageUrl,
-    categories.data?.at(2).images[2]?.imageUrl,
-  ];
+  const categoryIcons = categories.data?.map((e) => e.images?.at(0)?.imageUrl);
 
   const pageRef = useRef();
   const accordionRef = useRef([]);
@@ -40,6 +34,24 @@ export const Home = () => {
       );
   }, [categories.data]);
 
+  const accordionOnChange = (i) =>
+    setActiveAccordion((prev) => {
+      const newState = prev === i ? null : i;
+      if (!newState)
+        setTimeout(
+          () =>
+            pageRef.current.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: "smooth",
+            }),
+          1
+        );
+      else accordionRef.current[i].scrollIntoView();
+
+      return prev === i ? null : i;
+    });
+
   return (
     <div className="page" ref={pageRef}>
       <h2 className="title-2">Mr. Van G</h2>
@@ -49,7 +61,9 @@ export const Home = () => {
           <Accordion
             key={i}
             title={ele.title}
-            innerRef={(e) => (accordionRef.current[i] = e)}
+            innerRef={(e) => {
+              accordionRef.current[i] = e;
+            }}
             icon={
               <div
                 style={{
@@ -60,26 +74,9 @@ export const Home = () => {
               />
             }
             expanded={activeAccordion === i}
-            onChange={() =>
-              setActiveAccordion((prev) => {
-                const newState = prev === i ? null : i;
-                if (!newState)
-                  setTimeout(
-                    () =>
-                      pageRef.current.scrollTo({
-                        top: 0,
-                        left: 0,
-                        behavior: "smooth",
-                      }),
-                    1
-                  );
-                else accordionRef.current[i].scrollIntoView();
-
-                return prev === i ? null : i;
-              })
-            }
+            onChange={() => accordionOnChange(i)}
           >
-            {ele.images.map((img, ind) => {
+            {ele.images?.map((img, ind) => {
               return (
                 <IconLink
                   key={ind}

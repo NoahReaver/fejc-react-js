@@ -22,13 +22,12 @@
   overflow-x: hidden;
 }
 
+/* Hide scroll - Browser compatible */
 .page::-webkit-scrollbar {
   width: 0 !important;
 }
 .page {
   overflow: -moz-scrollbars-none;
-}
-.page {
   -ms-overflow-style: none;
 }
 
